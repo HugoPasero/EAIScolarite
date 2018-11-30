@@ -42,7 +42,6 @@ public class ServiceScolarite {
                 this.convTraitees = convTraitees;
             }
         try {
-            //this.conv = new HashMap();
             this.recevoir();
         } catch (NamingException ex) {
             Logger.getLogger(ServiceScolarite.class.getName()).log(Level.SEVERE, null, ex);
