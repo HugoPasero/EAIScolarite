@@ -23,6 +23,8 @@ public class ServiceScolarite {
     private HashMap<Long, PreConvention> conv;
     private HashMap<Long, PreConvention> convTraitees;
     static MessageConsumer receiver = null;
+    static MessageProducer sender = null;
+    static Session session = null;
 
     /**
      * @param args the command line arguments
@@ -76,10 +78,6 @@ public class ServiceScolarite {
         String factoryName = "jms/__defaultConnectionFactory";
         String destName = "PreConvention";
         Destination dest = null;
-        //nombre de messages que l'on reçoit
-        int count = 10;
-        Session session = null;
-
         
         //Toutes les connections sont gérées par le serveur 
 
@@ -99,10 +97,17 @@ public class ServiceScolarite {
             // create the receiver
             //je veux recevoir toutes les conventions
             receiver = session.createConsumer(dest);
+            
+            destName = "ConventionEnCours2";
 
+            // look up the Destination
+            dest = (Destination) context.lookup(destName);
+
+            // create the sender
+            sender = session.createProducer(dest);
+            
             // start the connection, to enable message receipt
             connection.start();
-
     }
     
     public void recevoir() throws NamingException {
@@ -134,76 +139,19 @@ public class ServiceScolarite {
     }
     
     public void envoyer(PreConvention pc) throws NamingException{
-        System.setProperty("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory"); 
-        System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
-        System.setProperty("org.omg.CORBA.ORBInitialPort", "3700"); 
-        InitialContext context = new InitialContext();
-        
-        ConnectionFactory factory = null;
-        Connection connection = null;
-        String factoryName = "jms/__defaultConnectionFactory";
-        String destName = "ConventionEnCours2";
-        Destination dest = null;
-        int count = 1;
-        Session session = null;
-        MessageProducer sender = null;
-        
+
         try {
-            // create the JNDI initial context.
-            context = new InitialContext();
-
-            // look up the ConnectionFactory
-            factory = (ConnectionFactory) context.lookup(factoryName);
-
-            // look up the Destination
-            dest = (Destination) context.lookup(destName);
-
-            // create the connection
-            connection = factory.createConnection();
-
-            // create the session
-            session = connection.createSession(
-                false, Session.AUTO_ACKNOWLEDGE);
-
-            // create the sender
-            sender = session.createProducer(dest);
-
-            // start the connection, to enable message sends
-            connection.start();
             //while(true){
-                //for (int i = 0; i < count; i++) {
-                    ObjectMessage message = session.createObjectMessage();
-                    message.setObject(pc);
-                    sender.send(message);
-                    
-                    System.out.println("Sent: " + message.getObject() + "\n est valide " + pc.estValide());
-                //}
-                //Thread.sleep(1000);
-          //  }
+            //for (int i = 0; i < count; i++) {
+            ObjectMessage message = session.createObjectMessage();
+            message.setObject(pc);
+            sender.send(message);
             
-        } catch (JMSException exception) {
-            exception.printStackTrace();
-        } catch (NamingException exception) {
-            exception.printStackTrace();
-        } finally {
-            // close the context
-            if (context != null) {
-                try {
-                    context.close();
-                } catch (NamingException exception) {
-                    exception.printStackTrace();
-                }
-            }
-
-            // close the connection
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (JMSException exception) {
-                    exception.printStackTrace();
-                }
-            }
+            System.out.println("Sent: " + message.getObject() + "\n est valide " + pc.estValide());
+        } catch (JMSException ex) {
+            Logger.getLogger(ServiceScolarite.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
     
     public void estPasInscrit(PreConvention c){
