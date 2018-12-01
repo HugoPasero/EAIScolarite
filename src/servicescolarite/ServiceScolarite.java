@@ -22,6 +22,7 @@ import javax.naming.NamingException;
 public class ServiceScolarite {
     private HashMap<Long, PreConvention> conv;
     private HashMap<Long, PreConvention> convTraitees;
+    static MessageConsumer receiver = null;
 
     /**
      * @param args the command line arguments
@@ -63,9 +64,8 @@ public class ServiceScolarite {
     public void setConvTraitees(HashMap<Long, PreConvention> convTraitees) {
         this.convTraitees = convTraitees;
     }
-    
-    public void recevoir() throws NamingException {
-        //System.setProperty
+  
+    static public void init() throws NamingException, JMSException {
         System.setProperty("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
         System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");
         System.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
@@ -79,10 +79,10 @@ public class ServiceScolarite {
         //nombre de messages que l'on reçoit
         int count = 10;
         Session session = null;
-        MessageConsumer receiver = null;
+
         
         //Toutes les connections sont gérées par le serveur 
-        try {
+
             // look up the ConnectionFactory
             factory = (ConnectionFactory) context.lookup(factoryName);
 
@@ -103,9 +103,14 @@ public class ServiceScolarite {
             // start the connection, to enable message receipt
             connection.start();
 
-            //while(true) {
-            for(int i = 0; i < count; ++i){
-                Message message = receiver.receive();
+    }
+    
+    public void recevoir() throws NamingException {
+        //System.setProperty
+        try {
+            while(true) {
+            //for(int i = 0; i < 10; ++i){
+                Message message = receiver.receiveNoWait();
                 if (message instanceof ObjectMessage) {
                     //on récupère le message
                     ObjectMessage flux = (ObjectMessage) message;
@@ -114,37 +119,17 @@ public class ServiceScolarite {
                     //on récupère la pré-conv dans l'objet
                     if (preconvention instanceof PreConvention) {
                         PreConvention convention = (PreConvention) preconvention;
-                        
                         if(!conv.containsKey(convention.getId()) && !convTraitees.containsKey(convention.getId()))
                             conv.put(convention.getId(), convention);
+                        else 
+                            break;
                     }
-
                 } else if (message != null) {
                     System.out.println("Pas de préconvention reçue");
                 }
             }
         } catch (JMSException exception) {
             exception.printStackTrace();
-        } catch (NamingException exception) {
-            exception.printStackTrace();
-        } finally {
-            // close the context
-            if (context != null) {
-                try {
-                    context.close();
-                } catch (NamingException exception) {
-                    exception.printStackTrace();
-                }
-            }
-
-            // close the connection
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (JMSException exception) {
-                    exception.printStackTrace();
-                }
-            }
         }
     }
     

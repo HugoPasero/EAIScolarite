@@ -4,6 +4,7 @@ import donnes.preconvention.PreConvention;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.jms.JMSException;
 import javax.naming.NamingException;
 import javax.swing.table.DefaultTableModel;
 import servicescolarite.ServiceScolarite;
@@ -128,7 +129,7 @@ public class ListePreConv extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Num Etudiant", "Nom", "Prénom"
+                "Id Convention", "Nom", "Prénom"
             }
         ) {
             Class[] types = new Class [] {
@@ -275,11 +276,17 @@ public class ListePreConv extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ListePreConv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
+        try {
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
+            ServiceScolarite.init();
+        } catch (NamingException ex) {
+            Logger.getLogger(ListePreConv.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
+            Logger.getLogger(ListePreConv.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
