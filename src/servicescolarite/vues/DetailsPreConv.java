@@ -4,7 +4,8 @@ import donnes.date.DateConvention;
 import donnes.preconvention.PreConvention;
 
 /**
- *
+ * Fenêtre des détails de la préconvention à valider 
+ * sélectionnée dans le service scolarité 
  * @author marieroca
  */
 public class DetailsPreConv extends javax.swing.JFrame {
@@ -28,6 +29,7 @@ public class DetailsPreConv extends javax.swing.JFrame {
         DateConvention dFin = this.fenMere.getConv().get(pc).getDateFin();
         this.tfDateDeb.setText(dDeb.toString());
         this.tfDateFin.setText(dFin.toString());
+        //On affiche la durée sous le format "? mois et ? jours"
         String duree = DateConvention.nbMois(dDeb.getDate(), dFin.getDate()) + " mois " + DateConvention.nbJours(dDeb.getDate(), dFin.getDate()) + " jours";
         this.tfDuree.setText(duree);  
         
@@ -62,14 +64,11 @@ public class DetailsPreConv extends javax.swing.JFrame {
         tfResumeActivites = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         tfEntNom = new javax.swing.JTextField();
         tfSIREN = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         tfAssurNumContrat = new javax.swing.JTextField();
@@ -89,9 +88,10 @@ public class DetailsPreConv extends javax.swing.JFrame {
         bRefuser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Service Scolarité - Détails");
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel1.setText("Détails à valider de la pré-convetion");
+        jLabel1.setText("Détails à valider de la pré-convention");
 
         lNomPrenomEntreprise.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         lNomPrenomEntreprise.setText("de NOM Prénom à Entreprise");
@@ -167,8 +167,6 @@ public class DetailsPreConv extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Entreprise/Institution d'accueil"));
 
-        jLabel10.setText("Vérifier que l'entreprise ait une existance juridique.");
-
         jLabel9.setText("Nom :");
 
         jLabel16.setText("SIREN :");
@@ -185,24 +183,21 @@ public class DetailsPreConv extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel16)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(tfSIREN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tfEntNom)))
-                    .addComponent(jLabel10))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfSIREN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfEntNom)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(tfEntNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,10 +208,6 @@ public class DetailsPreConv extends javax.swing.JFrame {
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Assurance"));
-
-        jLabel17.setText("Vérifier que l'étudiant possède une assurance de");
-
-        jLabel18.setText("responsabilité civile valide sur la période.");
 
         jLabel19.setText("Nom :");
 
@@ -235,25 +226,17 @@ public class DetailsPreConv extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfAssurNumContrat)
-                            .addComponent(tfAssurNom))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfAssurNumContrat)
+                    .addComponent(tfAssurNom))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(tfAssurNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -365,7 +348,7 @@ public class DetailsPreConv extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(66, 66, 66))
         );
 
         bValider.setText("Valider");
@@ -405,7 +388,7 @@ public class DetailsPreConv extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bValider)
@@ -417,19 +400,41 @@ public class DetailsPreConv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Évènement généré lors du clic sur "Annuler"
+     * Fermeture de la fenêtre
+     * @param evt 
+     */
     private void bAnnuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAnnuleActionPerformed
+        this.fenMere.maj();
         this.dispose();
     }//GEN-LAST:event_bAnnuleActionPerformed
 
+    /**
+     * Évènement généré lors du clic sur "Valider"
+     * On envoie la préconvention vers le service des stage
+     * La préconvention est valide car l'étudiant est inscrit
+     * @param evt 
+     */
     private void bValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bValiderActionPerformed
         PreConvention p = this.fenMere.getConv().get(pc);
         this.fenMere.getS().estInscrit(p);
+        //On ferme la fenêtre
+        this.fenMere.maj();
         this.dispose();
     }//GEN-LAST:event_bValiderActionPerformed
 
+    /**
+     * Évènement généré lors du clic sur "Refuser"
+     * On envoie la préconvention vers le service des stage
+     * La préconvention est refusée car l'étudiant n'est pas inscrit
+     * @param evt 
+     */
     private void bRefuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRefuserActionPerformed
         PreConvention p = this.fenMere.getConv().get(pc);
         this.fenMere.getS().estPasInscrit(p);
+        //On ferme la fenêtre
+        this.fenMere.maj();
         this.dispose();
     }//GEN-LAST:event_bRefuserActionPerformed
 
@@ -474,12 +479,9 @@ public class DetailsPreConv extends javax.swing.JFrame {
     private javax.swing.JButton bRefuser;
     private javax.swing.JButton bValider;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
